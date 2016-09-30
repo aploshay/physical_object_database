@@ -164,6 +164,14 @@ Pod::Application.routes.draw do
     post :search_results, on: :collection
   end
 
+  resources :shipments do
+    get :unload, on: :member
+    patch :unload_object, on: :member
+    get :reload, on: :member
+    patch :reload_object, on: :member
+    get :shipments_list, on: :collection
+  end
+
   resources :signal_chains do
     patch :include, on: :member
     patch :reorder, on: :member

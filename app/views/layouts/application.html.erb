@@ -90,6 +90,9 @@
           <li>
             <%= link_to("Create Picklist", new_picklist_path) if policy(Picklist).new? %>
           </li>
+          <li>
+            <%= link_to("View Shipments", shipments_path) if policy(Shipment).index? %>
+          </li>
         </ul>
       </div>
       <div class="menuItem">

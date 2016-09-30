@@ -30,7 +30,7 @@ module PhysicalObjectsHelper
     return invalid_headers_array
   end
   
-  def PhysicalObjectsHelper.parse_csv(file, header_validation, picklist, filename)
+  def PhysicalObjectsHelper.parse_csv(file, header_validation, picklist, filename, shipment = nil)
     succeeded = []
     failed = []
     index = 0
@@ -160,6 +160,7 @@ module PhysicalObjectsHelper
               year: r[PhysicalObject.human_attribute_name("year")]
             )
           po.picklist = picklist unless picklist.nil?
+          po.shipment = shipment unless shipment.nil?
           po.assign_inferred_workflow_status
           tm = po.ensure_tm
           tm.class.parse_tm(tm, r) unless tm.nil?
