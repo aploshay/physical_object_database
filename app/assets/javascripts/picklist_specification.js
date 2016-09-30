@@ -29,6 +29,15 @@ function add_to_picklist(el) {
     success: function(data) {
       jQuery("#picklist_add_div").html(data);
     }});
+        } else if (el == $("#shipment_radio")[0]) {
+                jQuery.ajax({
+    url: "/shipments/shipments_list/",
+    type: "GET",
+    data: {},
+    dataType: "html",
+    success: function(data) {
+      jQuery("#picklist_add_div").html(data);
+    }});
 	} else {
 	  jQuery("#picklist_add_div").html("");
 	}

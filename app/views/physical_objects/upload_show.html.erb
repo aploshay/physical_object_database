@@ -15,13 +15,13 @@
   </p>
 </div>
 <div>
-  <%= form_for(:physical_object, :url => {:action => 'upload_update'}) do |f| %>
+  <%= form_for(:physical_object, url: upload_update_physical_objects_path) do |f| %>
     <div class="left top5" style="width: 300px">
-      <h2>Picklist Association</h2>
+      <h2>Picklist/Shipment Association</h2>
       <div>
         <table>
           <tr>
-            <td>No picklist association</td>
+            <td>No picklist/shipment association</td>
             <td style="min-width: 21px;">
               <%= radio_button_tag(:type, "none", false, {onclick: "add_to_picklist(this)", id: 'none_radio', class: 'exclusive'}) %>
             </td>
@@ -38,6 +38,13 @@
               <%= radio_button_tag(:type, "new", false, {onclick: "add_to_picklist(this)", id: 'new_radio', class: 'exclusive'}) %>
             </td>
           </tr>
+          <tr>
+            <td>Associate objects to an existing shipment</td>
+            <td>
+              <%= radio_button_tag(:type, "shipment", false, {onclick: "add_to_picklist(this)", id: 'shipment_radio', class: 'exclusive'}) %>
+            </td>
+          </tr>
+
         </table>
       </div>
       <div id="picklist_add_div">
