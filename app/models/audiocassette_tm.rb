@@ -78,6 +78,14 @@ class AudiocassetteTm < ActiveRecord::Base
     self.pack_deformation ||= 'None'
   end
 
+  def default_values_for_upload
+     default_values
+     self.sound_field = 'Unknown'
+     self.format_duration = 'Unknown'
+     self.unknown_playback_speed = true
+     self.tape_type = 'I'
+  end
+
   def damage
     pack_deformation
   end

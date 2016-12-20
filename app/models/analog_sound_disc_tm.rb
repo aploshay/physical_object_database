@@ -122,8 +122,9 @@ class AnalogSoundDiscTm < ActiveRecord::Base
       }
   }
 
-  def default_values
-    values_hash = DEFAULT_VALUES[subtype]
+  def default_values(subtype_set = nil)
+    subtype_set ||= subtype
+    values_hash = DEFAULT_VALUES[subtype_set]
     unless values_hash.nil?
       self.diameter ||= values_hash[:diameter]
       self.speed ||= values_hash[:speed]
@@ -136,6 +137,10 @@ class AnalogSoundDiscTm < ActiveRecord::Base
       self.material ||= values_hash[:material]
       self.equalization ||= values_hash[:equalization]
     end
+  end
+
+  def default_values_for_upload
+     default_values('78')
   end
 
   def damage

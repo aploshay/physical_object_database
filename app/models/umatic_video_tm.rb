@@ -52,6 +52,14 @@ class UmaticVideoTm < ActiveRecord::Base
     self.image_format = "4:3"
   end
 
+  def default_values_for_upload
+     default_values
+     self.pack_deformation = 'None'
+     self.format_duration = 'Unknown'
+     self.size = 'Small'
+     self.format_version = 'Unknown'
+  end
+
   def damage
     pack_deformation
   end
