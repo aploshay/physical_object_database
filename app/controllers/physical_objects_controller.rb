@@ -282,7 +282,7 @@ class PhysicalObjectsController < ApplicationController
         @failed = upload_results['failed']
       end
     else
-      redirect_to(action: 'upload_show')
+      redirect_to :back
     end
   end
 
