@@ -683,8 +683,8 @@ describe PhysicalObjectsController do
       it "flashes a notice" do
         expect(flash[:notice]).to match /choose.*picklist association/
       end
-      it "redirects to upload_show" do
-        expect(response).to redirect_to(action: :upload_show)
+      it "redirects to :back" do
+        expect(response).to redirect_to 'source_page'
       end
     end
     describe "associating to a new picklist" do
@@ -693,8 +693,8 @@ describe PhysicalObjectsController do
         it "flashes a notice" do
           expect(flash[:notice]).to match /picklist.*name/
         end
-        it "redirects to upload_show" do
-          expect(response).to redirect_to(action: :upload_show)
+        it "redirects to :back" do
+          expect(response).to redirect_to 'source_page'
         end
       end
     end
@@ -703,8 +703,8 @@ describe PhysicalObjectsController do
       it "flashes a notice" do
         expect(flash[:notice]).to match /please.*specify.*file/i
       end
-      it "redirects to upload_show" do
-        expect(response).to redirect_to(action: :upload_show)
+      it "redirects to :back" do
+        expect(response).to redirect_to 'source_page'
       end
     end
     describe "with invalid columns headers" do
@@ -794,8 +794,8 @@ describe PhysicalObjectsController do
             it "flashes inaction" do
               expect(flash[:notice]).to match /select.*shipment/i
             end
-            it "redirects to upload_show" do
-              expect(response).to redirect_to(action: :upload_show)
+            it "redirects to :back" do
+              expect(response).to redirect_to 'source_page'
             end
           end
         end
@@ -820,8 +820,8 @@ describe PhysicalObjectsController do
             it "flashes inaction" do
               expect(flash[:notice]).to match /select.*picklist/i
             end
-            it "redirects to upload_show" do
-              expect(response).to redirect_to(action: :upload_show)
+            it "redirects to :back" do
+              expect(response).to redirect_to 'source_page'
             end
           end
         end
@@ -849,8 +849,8 @@ describe PhysicalObjectsController do
             it "flashes error warning" do
               expect(flash[:warning]).to match /error/i
             end
-            it "redirects to upload_show" do
-              expect(response).to redirect_to(action: :upload_show)
+            it "redirects to :back" do
+              expect(response).to redirect_to 'source_page'
             end
           end
         end
