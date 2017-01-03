@@ -1,6 +1,6 @@
 class ShipmentsController < ApplicationController
   before_action :set_shipment, only: [:show, :edit, :update, :destroy, :unload, :unload_object, :reload, :reload_object]
-  before_action :authorize_collection, only: [:index, :new, :create, :shipments_list]
+  before_action :authorize_collection, only: [:index, :new, :create, :shipments_list, :new_shipment]
   before_action :set_po, only: [:unload_object, :reload_object]
   before_action :set_shipment_dropdown, only: [:shipments_list]
 
@@ -18,6 +18,10 @@ class ShipmentsController < ApplicationController
   # GET /shipments/new
   def new
     @shipment = Shipment.new
+  end
+
+  def new_shipment
+    render(partial: 'new_shipment')
   end
 
   def shipments_list
@@ -136,7 +140,11 @@ class ShipmentsController < ApplicationController
     end
 
     def set_shipment_dropdown
-      @shipments = Shipment.all.order('identifier').collect{ |s| [s.identifier, s.id] }
+      if @pundit_user&.unit
+        @shipments = Shipment.where(unit_id: @pundit_user&.unit&.id).order('identifier').collect{ |s| [s.identifier, s.id] }
+      else
+        @shipments = Shipment.all.order('identifier').collect{ |s| [s.identifier, s.id] }
+      end
     end
 
 end

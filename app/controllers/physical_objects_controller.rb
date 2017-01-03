@@ -265,6 +265,10 @@ class PhysicalObjectsController < ApplicationController
       elsif params[:type] == "shipment"
         @shipment = Shipment.find_by(id: params[:shipment][:id].to_i)
         flash[:warning] = "SYSTEM ERROR: Selected shipment not found!<br/>Spreadsheet NOT uploaded.".html_safe if @shipment.nil?
+      elsif params[:type] == 'shipment_new'
+        @shipment = Shipment.new(identifier: params[:shipment][:identifier], description: params[:shipment][:description], unit_id: params[:shipment][:unit_id])
+        @shipment.save
+        flash[:warning] = "Errors creating shipment:<ul>#{@shipment.errors.full_messages.each.inject('') { |output, error| output += ('<li>' + error + '</li>') }}</ul>Spreadsheet NOT uploaded.".html_safe if @shipment.errors.any?
       end
     end
     if flash[:notice].to_s.blank? and flash[:warning].to_s.blank?

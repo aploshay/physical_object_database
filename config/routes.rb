@@ -171,6 +171,7 @@ Pod::Application.routes.draw do
     get :reload, on: :member
     patch :reload_object, on: :member
     get :shipments_list, on: :collection
+    get :new_shipment, on: :collection
   end
 
   resources :signal_chains do

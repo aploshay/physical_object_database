@@ -38,7 +38,12 @@
               <%= radio_button_tag(:type, "shipment", false, {onclick: "add_to_picklist(this)", id: 'shipment_radio', class: 'exclusive'}) %>
             </td>
           </tr>
-
+          <tr>
+            <td>Associate objects to a new shipment</td>
+            <td>
+              <%= radio_button_tag(:type, "shipment_new", false, {onclick: "add_to_picklist(this)", id: 'shipment_new_radio', class: 'exclusive'}) %>
+            </td>
+          </tr>
         </table>
       </div>
       <div id="picklist_add_div">

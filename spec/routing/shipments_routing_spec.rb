@@ -9,6 +9,10 @@ describe ShipmentsController do
       expect(:get => "/shipments/new").to route_to("shipments#new")
     end
 
+    it "routes to #new_shipment" do
+      expect(:get => "/shipments/new_shipment").to route_to("shipments#new_shipment")
+    end
+
     it "routes to #show" do
       expect(:get => "/shipments/1").to route_to("shipments#show", :id => "1")
     end
