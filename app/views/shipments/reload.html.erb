@@ -4,7 +4,7 @@
   </div>
 <% end %>
 
-<h2>Repacking Shipment: <i><%= @shipment.identifier %></i></h2>
+<h2>Reloading Shipment: <i><%= @shipment.identifier %></i></h2>
 
 <div style="padding-bottom: 20px">
   <div>
@@ -18,18 +18,18 @@
           <%= text_field_tag(:mdpi_barcode, nil) %>
         </td>
         <td>
-          <%= f.submit("Repack Physical Object", id: 'normal_submit') %>
+          <%= f.submit("Reload Physical Object", id: 'normal_submit') %>
         </td>
       </tr>
     </table>
   <% end %>
 
     <div class="left" style="width: 48%">
-      <h2>Items to repack [<%= @unprocessed.size %>]</h2>
+      <h2>Items to reload [<%= @unprocessed.size %>]</h2>
       <%= render "unprocessed_physical_objects_table" %> 
     </div>
     <div class="left" style="width: 48%">
-      <h2>Items repacked [<%= @processed.size %>]</h2>
+      <h2>Items reloaded [<%= @processed.size %>]</h2>
       <%= render "processed_physical_objects_table" %>
     </div>
   </div>

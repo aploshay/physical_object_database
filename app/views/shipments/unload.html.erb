@@ -4,7 +4,7 @@
   </div>
 <% end %>
 
-<h2>Unpacking Shipment: <i><%= @shipment.identifier %></i></h2>
+<h2>Unloading Shipment: <i><%= @shipment.identifier %></i></h2>
 
 <div style="padding-bottom: 20px">
   <div>
@@ -18,7 +18,7 @@
           <%= text_field_tag(:mdpi_barcode, nil) %>
         </td>
         <td>
-          <%= f.submit("Unpack Physical Object", id: 'normal_submit') %>
+          <%= f.submit("Unload Physical Object", id: 'normal_submit') %>
         </td>
       </tr>
     </table>

@@ -174,6 +174,8 @@ class User < ActiveRecord::Base
   })
   COLLECTION_OWNER = NIL_ACCESS.merge({
     CollectionOwnerController => ALL_ACTIONS,
+    PhysicalObjectsController => { upload_show: true, upload_update: true },
+    SpreadsheetsController => READ_ONLY,
   })
 
   ROLE_PERMISSIONS = {
