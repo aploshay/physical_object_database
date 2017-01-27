@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161219221806) do
+ActiveRecord::Schema.define(version: 20170208193115) do
 
   create_table "analog_sound_disc_tms", force: :cascade do |t|
     t.string   "diameter",           limit: 255
@@ -202,6 +202,21 @@ ActiveRecord::Schema.define(version: 20161219221806) do
   add_index "condition_statuses", ["physical_object_id", "condition_status_template_id"], name: "index_cs_on_po_and_cst", using: :btree
   add_index "condition_statuses", ["physical_object_id"], name: "index_condition_statuses_on_physical_object_id", using: :btree
 
+  create_table "cylinder_tms", force: :cascade do |t|
+    t.string  "size",               limit: 255
+    t.string  "material",           limit: 255
+    t.string  "groove_pitch",       limit: 255
+    t.string  "playback_speed",     limit: 255
+    t.string  "recording_method",   limit: 255
+    t.boolean "fragmented"
+    t.boolean "repaired_break"
+    t.boolean "cracked"
+    t.boolean "damaged_core"
+    t.boolean "fungus"
+    t.boolean "efflorescence"
+    t.boolean "other_contaminants"
+  end
+
   create_table "dat_tms", force: :cascade do |t|
     t.boolean  "sample_rate_32k"
     t.boolean  "sample_rate_44_1_k"
@@ -284,7 +299,6 @@ ActiveRecord::Schema.define(version: 20161219221806) do
     t.float   "duration",    limit: 24
   end
 
-  add_index "doFiles", ["fileUsage"], name: "doFiles_fileUsage", using: :btree
   add_index "doFiles", ["mdpiBarcode", "partNumber"], name: "mdpiBarcode", using: :btree
 
   create_table "doObjects", primary_key: "mdpiBarcode", force: :cascade do |t|
@@ -713,13 +727,6 @@ ActiveRecord::Schema.define(version: 20161219221806) do
     t.datetime "updated_at"
   end
 
-  create_table "xState", force: :cascade do |t|
-    t.string "state", limit: 255
-  end
-
-  add_foreign_key "doFiles", "doParts", column: "mdpiBarcode", primary_key: "mdpiBarcode", name: "doFiles_ibfk_1"
-  add_foreign_key "doFiles", "doParts", column: "partNumber", primary_key: "partNumber", name: "doFiles_ibfk_1"
-  add_foreign_key "doParts", "doObjects", column: "mdpiBarcode", primary_key: "mdpiBarcode", name: "doParts_ibfk_1"
   add_foreign_key "physical_objects", "shipments"
   add_foreign_key "picklists", "shipments"
   add_foreign_key "shipments", "units"
