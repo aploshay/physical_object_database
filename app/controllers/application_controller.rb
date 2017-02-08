@@ -118,6 +118,8 @@ class ApplicationController < ActionController::Base
         :format_version, :cassette_size, :recording_standard, :image_format,
         # fields for betamax
         :oxide,
+        # fields for cylinder
+        :groove_pitch, :fragmented, :repaired_break, :damaged_core, :efflorescence,
         # fields for eight mm video
         :playback_speed, :binder_system,
         # fields of half inch open reel video
@@ -149,6 +151,8 @@ class ApplicationController < ActionController::Base
         :format_version => [], :cassette_size => [], :recording_standard => [], :image_format => [],
         # fields for betamax
         :oxide => [],
+        # fields for cylinder
+        :groove_pitch => [], :fragmented => [], :repaired_break => [], :damaged_core => [], :efflorescence => [],
         # fields for eight mm video
         :playback_speed => [], :binder_system => [],
         # fields for half inch open reel video
