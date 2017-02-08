@@ -11,7 +11,7 @@ class CylinderTm < ActiveRecord::Base
   BOX_FORMAT = false
   BIN_FORMAT = true
   # TM simple fields
-  SIMPLE_FIELDS = ["size", "material", "groove_pitch", "recording_method"]
+  SIMPLE_FIELDS = ["size", "material", "groove_pitch", "playback_speed", "recording_method"]
   SIZE_VALUES = hashify ["Standard", "Concert", "Six inch", "Unknown"]
   MATERIAL_VALUES = hashify ["Wax", "Celluloid", "Unknown"]
   GROOVE_PITCH_VALUES = hashify ["100 tpi", "200 tpi", "Other", "Unknown"]
