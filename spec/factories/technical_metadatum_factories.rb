@@ -120,7 +120,7 @@ FactoryGirl.define do
     groove_pitch "Unknown"
     playback_speed "Unknown"
     recording_method "Unknown"
-    # damage
+    # structural damage
     fragmented 0
     repaired_break 0
     cracked 0

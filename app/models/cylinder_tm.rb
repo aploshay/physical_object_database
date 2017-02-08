@@ -17,10 +17,10 @@ class CylinderTm < ActiveRecord::Base
   GROOVE_PITCH_VALUES = hashify ["100 tpi", "200 tpi", "Other", "Unknown"]
   RECORDING_METHOD_VALUES = hashify ["Cut", "Molded", "Unknown"]
   # TM Boolean fieldsets
-  DAMAGE_FIELDS = ["fragmented", "repaired_break", "cracked", "damaged_core"]
+  STRUCTURAL_DAMAGE_FIELDS = ["fragmented", "repaired_break", "cracked", "damaged_core"]
   PRESERVATION_PROBLEM_FIELDS = ["fungus", "efflorescence", "other_contaminants"]
   MULTIVALUED_FIELDSETS = {
-    "Damage" => :DAMAGE_FIELDS,
+    "Structural Damage" => :STRUCTURAL_DAMAGE_FIELDS,
     "Preservation problems" => :PRESERVATION_PROBLEM_FIELDS
   }
   # TM display and export
@@ -39,10 +39,12 @@ class CylinderTm < ActiveRecord::Base
   end
 
   def default_values_for_upload
-     default_values
+    default_values
   end
 
-  # damage field
+  def damage
+    structural_damage
+  end
 
   # master_copies default of 1
 end
