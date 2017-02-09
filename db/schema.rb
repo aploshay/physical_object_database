@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170208200347) do
+ActiveRecord::Schema.define(version: 20170209181248) do
 
   create_table "analog_sound_disc_tms", force: :cascade do |t|
     t.string   "diameter",           limit: 255
@@ -233,22 +233,24 @@ ActiveRecord::Schema.define(version: 20170208200347) do
 
   create_table "digital_file_provenances", force: :cascade do |t|
     t.datetime "date_digitized"
-    t.text     "comment",               limit: 65535
-    t.string   "created_by",            limit: 255
-    t.string   "speed_used",            limit: 255
+    t.text     "comment",                  limit: 65535
+    t.string   "created_by",               limit: 255
+    t.string   "speed_used",               limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "digital_provenance_id", limit: 8
-    t.string   "filename",              limit: 255,   null: false
-    t.integer  "signal_chain_id",       limit: 8
-    t.integer  "tape_fluxivity",        limit: 4
-    t.string   "volume_units",          limit: 255
-    t.string   "analog_output_voltage", limit: 255
-    t.integer  "peak",                  limit: 4
-    t.string   "stylus_size",           limit: 255
-    t.string   "turnover",              limit: 255
-    t.string   "rolloff",               limit: 255
-    t.string   "noise_reduction",       limit: 255
+    t.integer  "digital_provenance_id",    limit: 8
+    t.string   "filename",                 limit: 255,   null: false
+    t.integer  "signal_chain_id",          limit: 8
+    t.integer  "tape_fluxivity",           limit: 4
+    t.string   "volume_units",             limit: 255
+    t.string   "analog_output_voltage",    limit: 255
+    t.integer  "peak",                     limit: 4
+    t.string   "stylus_size",              limit: 255
+    t.string   "turnover",                 limit: 255
+    t.string   "rolloff",                  limit: 255
+    t.string   "noise_reduction",          limit: 255
+    t.integer  "rumble_filter",            limit: 4
+    t.integer  "reference_tone_frequency", limit: 4
   end
 
   add_index "digital_file_provenances", ["filename"], name: "index_digital_file_provenances_on_filename", unique: true, using: :btree

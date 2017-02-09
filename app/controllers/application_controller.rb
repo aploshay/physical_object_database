@@ -169,7 +169,8 @@ class ApplicationController < ActionController::Base
         :baking, :repaired, :duration, :batch_processing_flag, digital_file_provenances_attributes: [
           :id, :filename, :comment, :date_digitized, :display_date_digitized, :created_by,
           :speed_used, :signal_chain_id, :volume_units, :tape_fluxivity, :peak, :analog_output_voltage,
-          :stylus_size, :turnover, :rolloff, :noise_reduction, :_destroy]
+          :stylus_size, :turnover, :rolloff, :noise_reduction, :reference_tone_frequency, 
+          :rumble_filter, :_destroy]
       )
     end
 

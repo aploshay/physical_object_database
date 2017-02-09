@@ -3,6 +3,15 @@ class CylinderTm < ActiveRecord::Base
   after_initialize :default_values, if: :new_record?
   extend TechnicalMetadatumClassModule
   # TM module constants
+  PROVENANCE_REQUIREMENTS = TechnicalMetadatumModule::PROVENANCE_REQUIREMENTS.merge({
+    speed_used: true,
+    volume_units: true,
+    stylus_size: true,
+    turnover: false,
+    rolloff: false,
+    rumble_filter: false,
+    reference_tone_frequency: false,
+  }) 
   # PROVENANCE_REQUIREMENTS unchanged from default
   TM_FORMAT = ['Cylinder']
   TM_SUBTYPE = false

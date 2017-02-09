@@ -22,6 +22,9 @@ describe DigitalFileProvenance do
     specify "peak" do
       expect(new_dfp.peak).to eq -18
     end
+    specify "reference_tone_frequency" do
+      expect(new_dfp.reference_tone_frequency).to eq 440
+    end
   end
 
   describe "FactoryGirl" do
@@ -111,6 +114,18 @@ describe DigitalFileProvenance do
         expect(valid_dfp).not_to be_valid
         valid_dfp.peak = -1
         expect(valid_dfp).to be_valid
+      end
+    end
+    describe "rumble_filter" do
+      it "must be greater than 0" do
+        valid_dfp.rumble_filter = 0
+        expect(valid_dfp).not_to be_valid
+      end
+    end
+    describe "reference_tone_frequency" do
+      it "must be greater than 0" do
+        valid_dfp.reference_tone_frequency = 0
+        expect(valid_dfp).not_to be_valid
       end
     end
 
