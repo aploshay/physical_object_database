@@ -22,9 +22,6 @@ describe DigitalFileProvenance do
     specify "peak" do
       expect(new_dfp.peak).to eq -18
     end
-    specify "reference_tone_frequency" do
-      expect(new_dfp.reference_tone_frequency).to eq 440
-    end
   end
 
   describe "FactoryGirl" do

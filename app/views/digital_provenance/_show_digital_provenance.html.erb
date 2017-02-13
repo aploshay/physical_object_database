@@ -121,9 +121,16 @@
                                         var add = $(copyTable).find('select > option').first()[0].firstChild.textContent.startsWith("Select a signal") ? 0 : 1;
                                         var selectIndex = $(copyTable).find('select').first().prop('selectedIndex') + add;
                                         for (x = 4; x <12; x++) {
+                                        // exclude speed[4], stylus[9]
+                                          if (x != 4 && x != 9) {
+
                                                 val =  tds[x].value;
                                                 $(visibleTables).last().find('td > input')[x].value = val;
+                                          }
                                         }
+                                        //add reference tone default value
+                                        $(visibleTables).last().find('td > input')[14].value = '440';
+
                                         $(visibleTables).last().find('select option').eq(selectIndex).prop('selected', true);
                                         $(visibleTables).last().addClass('presRef');
                                 } else {
