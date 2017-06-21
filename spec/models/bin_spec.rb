@@ -314,5 +314,13 @@ describe Bin do
     end
   end
 
+  describe "#post_to_filmdb" do
+    context "for non-film bins"
+    context "for film bins" do
+      context "when successful"
+      context "when failed"
+    end
+  end
+
 end
 
