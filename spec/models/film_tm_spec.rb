@@ -31,7 +31,39 @@ describe FilmTm do
 
   describe "manifest export" do
     specify "has desired headers" do
-      expect(film_tm.manifest_headers).to eq ['Year', 'Gauge', 'Film generation', 'Footage', 'Base', 'Frame rate', 'Color', 'Aspect ratio', 'Anamorphic', 'Sound', 'Sound format type', 'Sound content type', 'Sound field', 'Clean', 'Resolution', 'Sample encoding', 'Workflow', 'On demand', 'Return on original reel', 'Film condition', 'Mold', 'Shrinkage', 'AD strip', 'Missing footage', 'Track count', 'Format duration', 'Stock', 'Conservation actions - IU', 'Miscellaneous', 'Return to']
+      expect(film_tm.manifest_headers).to eq ['Year', 'Gauge', 'Film generation', 'Footage', 'Base', 'Frame rate', 'Color', 'Aspect ratio', 'Anamorphic', 'Sound', 'Sound format type', 'Sound content type', 'Sound field', 'Clean', 'Resolution', 'Sample encoding', 'Workflow', 'On demand', 'Return on original reel', 'Condition - IU', 'Mold', 'Shrinkage', 'AD strip', 'Missing footage', 'Track count', 'Format duration', 'Stock', 'Conservation actions - IU', 'Miscellaneous', 'Return to']
+    end
+  end
+
+  describe "#preservation_problems" do
+    it "returns a blank string" do
+      film_tm.dusty = true
+      expect(film_tm.preservation_problems).to be_blank
+    end
+  end
+
+  describe "#preservation problem" do
+    it "returns boolean conditions" do
+      film_tm.dusty = true
+      expect(film_tm.preservation_problem).not_to be_blank
+    end
+  end
+
+  describe "#rated_conditions" do
+    it "returns rated conditions" do
+      film_tm.brittle = 1
+      film_tm.rusty = 4
+      expect(film_tm.rated_conditions).to match /Brittle: 1/i
+      expect(film_tm.rated_conditions).to match /,/
+      expect(film_tm.rated_conditions).to match /Rusty: 4/i
+    end
+  end
+  describe "#condition_iu" do
+    it "returns boolean + rated conditions" do
+      film_tm.dusty = true
+      film_tm.brittle = 1
+      film_tm.rusty = 4
+      expect(film_tm.film_condition).to match "#{film_tm.preservation_problem}, #{film_tm.rated_conditions}"
     end
   end
 
