@@ -27,4 +27,26 @@ class DigitalProvenance < ActiveRecord::Base
     complete
   end
 
+  def ensure_dfp
+    if digital_file_provenances.none? && physical_object&.format == 'Cylinder'
+      [:pres, :presRef, :presInt, :intRef, :prod].each do |file_use|
+        prefix = 'MDPI'
+        barcode = physical_object.mdpi_barcode
+        sequence = '01' #FIXME: format for integer padding
+        extension = (TechnicalMetadatumModule.tm_genres[physical_object.format] == :audio ? 'wav' : 'mkv')
+        filename = "MDPI_#{barcode}_#{sequence}_#{file_use}.#{extension}"
+        if file_use.to_s.match /Ref/
+          reference_tone = 440 if file_use.to_s.match /Ref/
+          signal_chain = SignalChain.where(name: 'Cylinder refTone').first
+        else
+          reference_tone = nil
+          signal_chain = SignalChain.where(name: 'Cylinder audio').first
+        end
+        digital_file_provenances.create(filename: filename, reference_tone_frequency: reference_tone, signal_chain: signal_chain)
+        # FIXME: set signal chains by reference, non-reference
+        # FIXME: set, or leave blank, other values?
+      end
+    end
+  end
+
 end
