@@ -155,6 +155,8 @@
 					}
 					$(visibleTables).last().find('select option').eq(selectIndex).prop('selected', true);
 				}
+                                $(visibleTables).last().find('.filename_button').prop('value', v);
+                                $(visibleTables).last().find('.filename_button').attr('data-clipboard-text', v);
 				el.val(v);
 			}
 		});
