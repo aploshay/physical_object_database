@@ -13,6 +13,7 @@ class DigitalProvenanceController < ApplicationController
 
 	def edit
 		@edit_mode = true
+		@hide_dp_na = true if @physical_object&.format == 'Cylinder'
 	end
 
 	def update
@@ -35,6 +36,7 @@ class DigitalProvenanceController < ApplicationController
 			redirect_to action: :show
 		else
 			@edit_mode = true
+                        @hide_dp_na = true if @physical_object&.format == 'Cylinder'
 			render action: :edit 
 		end
 	end
