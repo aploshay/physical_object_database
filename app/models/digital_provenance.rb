@@ -38,11 +38,20 @@ class DigitalProvenance < ActiveRecord::Base
         if file_use.to_s.match /Ref/
           reference_tone = 440 if file_use.to_s.match /Ref/
           signal_chain = SignalChain.where(name: 'Cylinder refTone').first
+          speed_used = 'N/A'
+          stylus_size = 'N/A'
+          comment = nil
         else
           reference_tone = nil
           signal_chain = SignalChain.where(name: 'Cylinder audio').first
+          speed_used = nil
+          stylus_size = nil
+          comment = nil
+          if file_use == :prod
+            comment = 'De-click, De-crackle, normalized to -7 dBfs. Then Spectral De-noise, EQ, normalized to -7 dBfs again.'
+          end
         end
-        digital_file_provenances.create(filename: filename, reference_tone_frequency: reference_tone, signal_chain: signal_chain)
+        digital_file_provenances.create(filename: filename, reference_tone_frequency: reference_tone, signal_chain: signal_chain, speed_used: speed_used, stylus_size: stylus_size, comment: comment)
         # FIXME: set signal chains by reference, non-reference
         # FIXME: set, or leave blank, other values?
       end
