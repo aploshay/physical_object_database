@@ -63,6 +63,18 @@ class SearchController < ApplicationController
     end
   end
 
+  def for_sherri
+    @full_results = PhysicalObject.where(unit_id: 62, format: 'Open Reel Audio Tape', catalog_key: [nil, '']).eager_load(:box, :bin, :box_bin, :box_batch, :bin_batch, :unit, :notes, :condition_statuses, :group_key, :technical_metadatum)
+    respond_to do |format|
+      format.html { render :advanced_search_results }
+      format.xls do
+        @block_metadata = format_param.blank?
+        @physical_objects = @full_results
+        render 'show'
+      end
+    end
+  end
+
   private
     def authorize_search
       authorize :search

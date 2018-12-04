@@ -168,6 +168,7 @@ Pod::Application.routes.draw do
 
   resources :search, controller: :search, only: [:index] do
     post :advanced_search, on: :collection
+    get :for_sherri, on: :collection
     post :search_results, on: :collection
   end
 
