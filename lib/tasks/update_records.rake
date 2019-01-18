@@ -24,7 +24,7 @@ namespace :pod do
           atts.each do |att, value|
             msg = "#{mdpi_barcode}: "
             msg += "#{att}: "
-            if po.send(att).to_s == att.to_s
+            if po.send(att).to_s == value.to_s
               msg += 'NO CHANGE: values match'
               logger.info(msg)
             else
