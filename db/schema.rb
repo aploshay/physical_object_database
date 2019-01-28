@@ -204,11 +204,6 @@ ActiveRecord::Schema.define(version: 20181204200114) do
   add_index "condition_statuses", ["physical_object_id", "condition_status_template_id"], name: "index_cs_on_po_and_cst", using: :btree
   add_index "condition_statuses", ["physical_object_id"], name: "index_condition_statuses_on_physical_object_id", using: :btree
 
-  create_table "containers", force: :cascade do |t|
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
   create_table "cylinder_tms", force: :cascade do |t|
     t.string  "size",               limit: 255
     t.string  "material",           limit: 255
@@ -881,35 +876,62 @@ ActiveRecord::Schema.define(version: 20181204200114) do
   add_index "workflow_statuses", ["physical_object_id", "workflow_status_template_id"], name: "index_ws_on_po_and_wst", using: :btree
 
   create_table "xDigitizingEntity", force: :cascade do |t|
-    t.string   "diameter",           limit: 255
-    t.string   "speed",              limit: 255
-    t.string   "groove_size",        limit: 255
-    t.string   "groove_orientation", limit: 255
-    t.string   "recording_method",   limit: 255
-    t.string   "material",           limit: 255
-    t.string   "substrate",          limit: 255
-    t.string   "coating",            limit: 255
-    t.string   "equalization",       limit: 255
-    t.string   "country_of_origin",  limit: 255
-    t.boolean  "delamination"
-    t.boolean  "exudation"
-    t.boolean  "oxidation"
-    t.boolean  "cracked"
-    t.boolean  "warped"
-    t.boolean  "dirty"
-    t.boolean  "scratched"
-    t.boolean  "worn"
-    t.boolean  "broken"
-    t.boolean  "fungus"
-    t.string   "label",              limit: 255
-    t.string   "sound_field",        limit: 255
-    t.string   "subtype",            limit: 255
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.string "name", limit: 255
   end
+
+  create_table "xObjectClass", force: :cascade do |t|
+    t.string "class", limit: 255
+  end
+
+  create_table "xObjectType", force: :cascade do |t|
+    t.string "type", limit: 255
+  end
+
+  create_table "xObjects", force: :cascade do |t|
+    t.string  "mdpiBarcode",        limit: 14,  null: false
+    t.boolean "active"
+    t.boolean "visible"
+    t.integer "transferTime",       limit: 4
+    t.integer "digitizingEntityId", limit: 4,   null: false
+    t.integer "objectTypeId",       limit: 4,   null: false
+    t.integer "stateId",            limit: 4,   null: false
+    t.integer "stateTime",          limit: 4
+    t.integer "objectClassId",      limit: 4,   null: false
+    t.string  "path",               limit: 255
+    t.integer "diskUsage",          limit: 8
+    t.float   "duration",           limit: 24
+  end
+
+  add_index "xObjects", ["digitizingEntityId"], name: "digitizingEntityId", using: :btree
+  add_index "xObjects", ["mdpiBarcode"], name: "mdpiBarcode", using: :btree
+  add_index "xObjects", ["objectClassId"], name: "objectClassId", using: :btree
+  add_index "xObjects", ["objectTypeId"], name: "objectTypeId", using: :btree
+  add_index "xObjects", ["path"], name: "path", using: :btree
+  add_index "xObjects", ["stateId"], name: "stateId", using: :btree
+
+  create_table "xParts", id: false, force: :cascade do |t|
+    t.integer "objectId",   limit: 4,  null: false
+    t.integer "partNumber", limit: 1,  null: false
+    t.boolean "vendorQC"
+    t.float   "duration",   limit: 24
+  end
+
+  add_index "xParts", ["objectId"], name: "objectId", using: :btree
 
   create_table "xState", force: :cascade do |t|
     t.string "state", limit: 255
   end
 
+  add_foreign_key "batches", "spreadsheets"
+  add_foreign_key "doFiles", "doParts", column: "mdpiBarcode", primary_key: "mdpiBarcode", name: "doFiles_ibfk_1"
+  add_foreign_key "doFiles", "doParts", column: "partNumber", primary_key: "partNumber", name: "doFiles_ibfk_1"
+  add_foreign_key "doParts", "doObjects", column: "mdpiBarcode", primary_key: "mdpiBarcode", name: "doParts_ibfk_1"
+  add_foreign_key "physical_objects", "shipments"
+  add_foreign_key "picklists", "shipments"
+  add_foreign_key "shipments", "units"
+  add_foreign_key "xObjects", "xDigitizingEntity", column: "digitizingEntityId", name: "xObjects_ibfk_2"
+  add_foreign_key "xObjects", "xObjectClass", column: "objectClassId", name: "xObjects_ibfk_4"
+  add_foreign_key "xObjects", "xObjectType", column: "objectTypeId", name: "xObjects_ibfk_3"
+  add_foreign_key "xObjects", "xState", column: "stateId", name: "xObjects_ibfk_1"
+  add_foreign_key "xParts", "xObjects", column: "objectId", name: "xParts_ibfk_1"
 end

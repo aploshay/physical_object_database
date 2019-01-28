@@ -65,7 +65,8 @@ class SearchController < ApplicationController
 
   def for_sherri
     #@full_results = PhysicalObject.where(unit_id: [4, 18, 19, 21, 28, 36, 54, 56, 62, 65, 72, 76], catalog_key: [nil, '']).eager_load(:box, :bin, :box_bin, :box_batch, :bin_batch, :unit, :notes, :condition_statuses, :group_key, :technical_metadatum)
-    @full_results = PhysicalObject.where(unit_id: 18, catalog_key: [nil, '']).eager_load(:box, :bin, :box_bin, :box_batch, :bin_batch, :unit, :notes, :condition_statuses, :group_key, :technical_metadatum)
+    # FIXME: always use order by format, id!  spreadsheet output assumes format grouping
+    @full_results = PhysicalObject.where(unit_id: 62, catalog_key: [nil, '']).eager_load(:box, :bin, :box_bin, :box_batch, :bin_batch, :unit, :notes, :condition_statuses, :group_key, :technical_metadatum).order(:format, :id)
     respond_to do |format|
       format.html { render :advanced_search_results }
       format.xls do
