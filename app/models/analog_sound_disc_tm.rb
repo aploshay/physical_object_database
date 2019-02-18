@@ -12,7 +12,7 @@ class AnalogSoundDiscTm < ActiveRecord::Base
     rolloff: false,
     rumble_filter: false
   })
-  TM_FORMAT = ['LP', 'Aluminum Disc', 'Lacquer Disc', '45', '78', 'Other Analog Sound Disc']
+  TM_FORMAT = ['LP', 'Aluminum Disc', 'Lacquer Disc', '45', '78', 'Other Analog Sound Disc', 'Lacquer Disc - Imaging']
   TM_SUBTYPE = true
   TM_GENRE = :audio
   TM_PARTIAL = 'show_analog_sound_disc_tm'
@@ -178,6 +178,17 @@ class AnalogSoundDiscTm < ActiveRecord::Base
         coating: nil,
         material: nil,
         equalization: nil
+      },
+    "Lacquer Disc - Imaging" => { diameter: nil,
+        speed: nil,
+        groove_size: nil,
+        groove_orientation: "Lateral",
+        sound_field: "Mono",
+        recording_method: "Cut",
+        substrate: "Aluminum",
+        coating: "Lacquer",
+        material: "N/A",
+        equalization: "Other"
       },
     "Unknown" => { diameter: 'Unknown',
         speed: 'Unknown',
