@@ -85,6 +85,12 @@
 			var ext = <%= (TechnicalMetadatumModule.tm_genres[@physical_object.format] == :audio ? "'wav'" : "'mkv'").html_safe%>;
 			// the "Add Digital File/PrestInt" link
 			var trig = event.currentTarget.activeElement;
+			// special case handling for .zip files for this format
+			<% if @physical_object.format == 'Lacquer Disc - Imaging' %>
+			if (trig.text == 'Add Digital Master File' || trig.text == 'Add BAR File') {
+				ext = 'zip';
+			}
+			<% end %>
 			el = $('.filename').last();
 			var v = "";
 			if ( el.val().length == 0) {
@@ -101,6 +107,7 @@
 				var seq = fn.length > 0 ? fn.last().val().substring(fn.last().val().search(pattern)+1, fn.last().val().search(pattern)+3) : "00";
 
 				if (trig.text != "Add Digital Master File") {
+
 					// prep to copy over all values from the previous file
 					var copyTable = visibleTables[visibleTables.length - 2];
 					var tds = $(copyTable).find('td > input');
@@ -141,6 +148,15 @@
                                 } else if (trig.text == "Add Prod File") {
 					$(visibleTables).last().addClass('prod');
 					v = "MDPI_"+bc+"_"+seq+"_prod."+ext;
+                                        // copy over any values from the previous file
+					for (x = 5; x < 13; x++) {
+						val =  tds[x].value;
+						$(visibleTables).last().find('td > input')[x].value = val;
+					}
+					$(visibleTables).last().find('select option').eq(selectIndex).prop('selected', true);
+                                } else if (trig.text == "Add BAR File") {
+					$(visibleTables).last().addClass('files');
+					v = "MDPI_"+bc+"_"+seq+"_files."+ext;
                                         // copy over any values from the previous file
 					for (x = 5; x < 13; x++) {
 						val =  tds[x].value;

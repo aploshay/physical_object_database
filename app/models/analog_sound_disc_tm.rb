@@ -3,7 +3,7 @@ class AnalogSoundDiscTm < ActiveRecord::Base
   after_initialize :default_values, if: :new_record?
   extend TechnicalMetadatumClassModule
   # TM module constants
-  DIGITAL_PROVENANCE_FILES = ['Digital Master', 'PresInt']
+  DIGITAL_PROVENANCE_FILES = ['Digital Master', 'PresInt', 'BAR']
   PROVENANCE_REQUIREMENTS = TechnicalMetadatumModule::PROVENANCE_REQUIREMENTS.merge({
     speed_used: true,
     volume_units: true,
