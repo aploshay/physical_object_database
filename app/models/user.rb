@@ -180,6 +180,7 @@ class User < ActiveRecord::Base
   ADVANCED_SEARCHER = NIL_ACCESS.merge({
     ReportsController => ALL_ACTIONS,
     SearchController => ALL_ACTIONS,
+    PodReportsController => ALL_ACTIONS,
   })
 
   ROLE_PERMISSIONS = {
