@@ -5,9 +5,11 @@ class PodReportJob < ActiveJob::Base
   def perform(search_params, ws_params)
     @search_params = search_params
     @ws_params = ws_params
-    pr = PodReport.new(filename: filename, status: "RUNNING")
+    pr = PodReport.new(filename: filename, status: "WAITING TO START")
     pr.save!
-    File.write(pr.full_path, report)
+
+    write_report(pr)
+
     pr.update_attributes!(status: 'Available')
   end
 
@@ -16,13 +18,45 @@ class PodReportJob < ActiveJob::Base
       @filename ||= Time.now.to_formatted_s.split(' ')[0,2].join('_').gsub(':', '') + '.xls'
     end
 
-    def report
-      @report ||= ApplicationController.new.render_to_string(
-                    template: 'search/report.xls',
-                    format: 'xls',
-                    locals: { :@physical_objects => physical_objects,
-                              :@block_metadata => true }
+    def write_report(pr)
+      File.write(pr.full_path, 
+                 ApplicationController.new.render_to_string(
+                   template: 'search/report_open.xls',
+                   format: 'xls',
+                   locals: { :@block_metadata => true } )
+                )
+      f = File.open(pr.full_path, 'a')
+
+
+      total = physical_objects.count
+      percentage = 0
+      physical_objects.find_each.with_index do |po, index|
+          f.write(ApplicationController.new.render_to_string(
+                  template: 'search/_search_physical_object.xls',
+                  format: 'xls',
+                  locals: { po: po, :@metadata_headers => [] } )
                   )
+                
+        updated_percentage = ((index + 1).to_f / total.to_f * 100.0).round
+        if updated_percentage > percentage
+          pr.update_attributes!(status: "#{updated_percentage}% (ETA: #{eta(pr.created_at, updated_percentage)})")
+          percentage = updated_percentage
+        end
+      end 
+      
+      f.write(ApplicationController.new.render_to_string(
+                template: 'search/report_close.xls',
+                format: 'xls' )
+              )
+
+      f.close
+    end
+
+    def eta(start_time, percentage)
+      time_passed = (Time.now - start_time)
+      percent_remaining = (100.0 - percentage)
+      time_remaining = percent_remaining * time_passed / percentage
+      Time.now + time_remaining
     end
 
     def physical_objects
